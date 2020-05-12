@@ -29,7 +29,7 @@ Github Profile > Settings > SSH and GPG keys > 우측 상단 New SSH Key
 ```bash
 $ pbcopy < ~/.ssh/id_rsa.pub
 ```
-
+![Personal settings](https://user-images.githubusercontent.com/13143231/81660970-6af95b80-9476-11ea-9567-bcd8d562a1c2.png)
 * 추가할 다른 Github 계정도 위와 동일하게 진행한다.
 
 * ssh-agent 에 키 등록  
