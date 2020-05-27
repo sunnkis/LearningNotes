@@ -126,11 +126,25 @@ Blocking&Non-Blocking 의 관심사는 **호출되는 함수가 바로 반환 �
 
 Synchronous&Asynchronous 관심사는 **호출되는 함수의 작업 완료 여부를 누가 신경 쓰는지에 대한 여부**이다.
 
-- Synchronous : 작업을 요청한 후 결과가 나올 때까지 기다린 후 처리 한다.(사용자 프로세스는 커널에 지속적으로 I/O 준비사항을 확인)
+- Synchronous : 작업을 요청한 후 결과가 나올 때까지 기다린 후 처리 한다.(사용자 프로세스는 커널에 지속적으로 I/O 준비 상태를 확인)  
   (A 가 B 를 호출 하였을 때, A 가 B 의 상태를 계속 확인하며 대기하다 결과를 가져 온다.)
 
-- Asynchronous : 병렬 처리로 진행하다가 이 전 시스템 호출의 종료에 대한 통지가 오면 처리를 진행
+- Asynchronous : 병렬 처리로 진행하다가 이 전 시스템 호출의 종료에 대한 통지가 오면 처리를 진행  
   (A 가 B 를 호출 하였을 때, B 가 우째되든 상태에 신경 쓰지 않고 다음 작업을 진행 하다 끝났다는 통지가 오면 처리 한다.)
+
+### Blocking&Non-Blocking&Synchronous&Asynchronous
+
+"사용자 프로세스가 시스템 호출 하였을 경우" 라고 전재하고 말해보자.
+
+- Synchronous & Blocking : 작업에 대한 결과가 반환될 때까지 **아무 작업도 진행 할 수 없으며, 완료 여부를 호출부에서 신경 써야 한다.**
+
+- Synchronous & Non-Blocking : 작업에 대한 결과를 바로 반환 받아 **제어권은 가지고 있지만, 호출부에서 작업의 완료 여부를 신경 쓰며 대기한다.**
+
+- Asynchronous & Blocking : 작업에 대한 결과가 반환될 때까지 **아무 작업도 할 수 없지만, 호출부에서 신경쓰지 않는다.**
+
+- Asynchronous & Non-Blocking : 작업에 대한 결과를 바로 반환 받아 **제어권을 가지고 다른 작업을 진행하며, 호출한 작업을 호출부에서 신경쓰지 않고**, 호출한 작업에 대한 통지가 오면 작업을 진행 한다.
+
+이렇게 정리하고 다음 I/O 모델들에 대해 살펴보자.
 
 ### Synchronous blocking I/O
 
@@ -179,6 +193,10 @@ select 와 poll은 여러개의 descriptor 에서 데이터가 준비 되었는�
 
 select call 의 주요 문제는 효율적이지 않다는 것이다.  
 asynchronous notification 에 편리한 모델이지만 고성능 I/O에 사용하는 것은 권장하지 않는다.
+
+추가적으로, 아래와 같은 이유 때문에 [IBM 블로그](https://developer.ibm.com/articles/l-async/)의 내용이 잘못되어 있다 라는 의견도 있으니 참고하면 좋겠다.
+
+[I/O Multiplexing이 IBM의 그림에서 Blocking-Async로 분류되어 있는 것에 동의하지 않는 이유](https://homoefficio.github.io/2017/02/19/Blocking-NonBlocking-Synchronous-Asynchronous)
 
 ### Asynchronous non-blocking I/O (AIO)
 
@@ -229,6 +247,8 @@ GPU에서의 그래픽 계산은 병렬 처리이다.
 ## 참고
 
 [Boost application performance using asynchronous I/O](https://developer.ibm.com/articles/l-async/)
+
+[Blocking-NonBlocking-Synchronous-Asynchronous](https://homoefficio.github.io/2017/02/19/Blocking-NonBlocking-Synchronous-Asynchronous/)
 
 [비동기 입출력](https://ko.wikipedia.org/wiki/%EB%B9%84%EB%8F%99%EA%B8%B0_%EC%9E%85%EC%B6%9C%EB%A0%A5)
 
