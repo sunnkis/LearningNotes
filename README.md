@@ -23,3 +23,7 @@
 ## LINUX
 
   * [How to install NVIDIA Driver on CentOS 8](https://github.com/sunnkis/LearningNotes/blob/master/LINUX/CentOS/How%20to%20install%20NVIDIA%20Driver%20on%20CentOS%208.md)
+  
+## ETC
+
+  * [Blocking-NonBlocking-Sync-Async](https://github.com/sunnkis/LearningNotes/blob/master/ETC/Blocking-NonBlocking-Sync-Async.md)
