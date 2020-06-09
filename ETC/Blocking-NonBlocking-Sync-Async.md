@@ -10,8 +10,8 @@
 
 비동기 프로그래밍에서는 크게 두 가지 방식으로 결과를 처리한다.
 
-- 함수 전달을 통해 처리(Callback)
-- 언어에서 지원하는 방식(Future, Promise)
+- **함수 전달을 통해 처리(Callback)**
+- **언어에서 지원하는 방식(Future, Promise)**
 
 특정 함수를 호출하여 처리하는 방식은 함수를 값처럼 사용하기(First-class function)를 지원하는 언어에서 자연스럽게 사용하는 기법이다.
 
@@ -106,15 +106,15 @@ Blocking 방식은 외부 작업의 결과를 멈추어서 기다리기 때문�
 
 운영체제가 제공하는 서비스 호출 함수를 시스템 호출이라고 한다.
 
-아래는 관련 내용으로 유명한 IBM DeveloperWorks 2x2 매트릭스 이미지이다.
+아래는 관련 내용으로 유명한 IBM DeveloperWorks 2x2 매트릭스 이미지이다.
 
 ![Simplified matrix of basic Linux I:O models](https://user-images.githubusercontent.com/13143231/83466036-d1d7c680-a4b0-11ea-868f-a704498e87d3.gif)
 
-내용 정리 후 다시 봐보도록 하자.
+동기와 비동기는 **프로세스의 수행 순서 보장에 대한 매커니즘**이고 블록킹과 논블록킹은 **프로세스의 유휴 상태에 대한 개념**으로 완전한 별개의 개념이다.
 
 ### Blocking&Non-Blocking
 
-Blocking&Non-Blocking 의 관심사는 **호출되는 함수가 바로 반환 되는지에 대한 여부**이다.
+Blocking&Non-Blocking 의 관심사는 **호출되는 함수가 반환 되는지에 대한 여부**이다.
 
 - Blocking : 사용자 프로세스가 시스템 호출을 하고 난 뒤에 결과가 반환 되기까지 다음 처리로 넘어가지 않고 대기하는 상태이다.
   (A 가 B 를 호출 하였을 때, B 가 완료되기 전까지 대기 상태 후 완료 시에 반환)
@@ -124,27 +124,14 @@ Blocking&Non-Blocking 의 관심사는 **호출되는 함수가 바로 반환 �
 
 ### Synchronous&Asynchronous
 
-Synchronous&Asynchronous 관심사는 **호출되는 함수의 작업 완료 여부를 누가 신경 쓰는지에 대한 여부**이다.
+Synchronous&Asynchronous 관심사는 **어떠한 순서를 가지고 실행되는지에 대한 여부**이다.
+더불어, 현재 작업의 응답과 다음 작업의 요청이 일치하느냐가 될 것이다.
 
-- Synchronous : 작업을 요청한 후 결과가 나올 때까지 기다린 후 처리 한다.(사용자 프로세스는 커널에 지속적으로 I/O 준비 상태를 확인)  
-  (A 가 B 를 호출 하였을 때, A 가 B 의 상태를 계속 확인하며 대기하다 결과를 가져 온다.)
+- Synchronous : 작업을 요청한 후 결과가 나올 때까지 기다린 후 처리 한다.
+  그렇기 때문에, 결과 시간과 반환되는 시간이 동일하다.
 
-- Asynchronous : 병렬 처리로 진행하다가 이 전 시스템 호출의 종료에 대한 통지가 오면 처리를 진행  
-  (A 가 B 를 호출 하였을 때, B 가 우째되든 상태에 신경 쓰지 않고 다음 작업을 진행 하다 끝났다는 통지가 오면 처리 한다.)
-
-### Blocking&Non-Blocking&Synchronous&Asynchronous
-
-"사용자 프로세스가 시스템 호출 하였을 경우" 라고 전재하고 말해보자.
-
-- Synchronous & Blocking : 작업에 대한 결과가 반환될 때까지 **아무 작업도 진행 할 수 없으며, 완료 여부를 호출부에서 신경 써야 한다.**
-
-- Synchronous & Non-Blocking : 작업에 대한 결과를 바로 반환 받아 **제어권은 가지고 있지만, 호출부에서 작업의 완료 여부를 신경 쓰며 대기한다.**
-
-- Asynchronous & Blocking : 작업에 대한 결과가 반환될 때까지 **아무 작업도 할 수 없지만, 호출부에서 신경쓰지 않는다.**
-
-- Asynchronous & Non-Blocking : 작업에 대한 결과를 바로 반환 받아 **제어권을 가지고 다른 작업을 진행하며, 호출한 작업을 호출부에서 신경쓰지 않고**, 호출한 작업에 대한 통지가 오면 작업을 진행 한다.
-
-이렇게 정리하고 다음 I/O 모델들에 대해 살펴보자.
+- Asynchronous : 요청한 작업에 대한 완료 여부를 신경쓰지 않고, 다음 작업을 진행한다.
+  그렇기 때문에,결과 시간과 반환 시간이 다르다.
 
 ### Synchronous blocking I/O
 
@@ -226,7 +213,6 @@ AIO의 기본 개념은 프로세스가 완료 될 때까지 기다리거나 기
 
 ## Concurrency(동시성) vs Parallelism(병렬성)
 
-결론부터 말하자면,  
 **Concurrency(동시성)** 은 많은 것들을 한 번에 처리하는 것이며,  
 **Parallelism(병렬성)** 처리는 한 번에 많은 작업을 수행하는 것이다.
 
@@ -249,6 +235,8 @@ GPU에서의 그래픽 계산은 병렬 처리이다.
 [Boost application performance using asynchronous I/O](https://developer.ibm.com/articles/l-async/)
 
 [Blocking-NonBlocking-Synchronous-Asynchronous](https://homoefficio.github.io/2017/02/19/Blocking-NonBlocking-Synchronous-Asynchronous/)
+
+[동기는 정확히 무엇을 의미하는걸까?](https://evan-moon.github.io/2019/09/19/sync-async-blocking-non-blocking/)
 
 [비동기 입출력](https://ko.wikipedia.org/wiki/%EB%B9%84%EB%8F%99%EA%B8%B0_%EC%9E%85%EC%B6%9C%EB%A0%A5)
 
