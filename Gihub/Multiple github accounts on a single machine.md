@@ -1,5 +1,5 @@
 # 개요  
-단일 머신에서 여러 Github 계정을 사용해야 할 경우 SSH 를 활용하여 관리하는 방법이다.
+단일 머신에서 여러 git 계정을 사용해야 할 경우 SSH 를 활용하여 관리하는 방법이다.
 
 * 기존에 SSH 키가 있는지 확인한다.
 ```bash
@@ -102,6 +102,3 @@ $ vi ~/.gitconfig
  [includeIf “gitdir:~/workspace/project2”]
  path = ~/workspace/project2/.git/config
 ```
-
-## 마치며  
-개인 계정과 업무용 계정을 하나의 pc 에서 작업할 때 위와 같은 방법으로 github 여러 계정을 효율적으로 관리하며 사용할 수 있다.
